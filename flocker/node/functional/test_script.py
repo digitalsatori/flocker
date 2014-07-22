@@ -74,10 +74,11 @@ class ChangeStateScriptTests(TestCase):
         ``ChangeStateScript._deployer`` is created with a ``VolumeService``
         with a config path which can be using with an environment variable.
         """
-        environ['CONFIG_PATH'] = b"/custom/path"
+        path = self.mktemp()
+        environ['CONFIG_PATH'] = path
         self.assertEqual(
             ChangeStateScript()._deployer._volume_service._config_path,
-            FilePath(b"/custom/path"))
+            FilePath(path))
 
     def test_volume_service_pool(self):
         """
