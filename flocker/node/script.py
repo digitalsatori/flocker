@@ -14,6 +14,7 @@ from yaml.error import YAMLError
 from zope.interface import implementer
 
 from ..volume.script import VolumeOptions, VolumeScript
+from ..volume.service import DEFAULT_CONFIG_PATH
 from ..common.script import (
     flocker_standard_options, FlockerScriptRunner, ICommandLineScript)
 from . import ConfigurationError, model_from_configuration, Deployer
@@ -47,6 +48,11 @@ class ChangeStateOptions(Options):
     synopsis = ("Usage: flocker-changestate [OPTIONS] "
                 "<deployment configuration> <application configuration> "
                 "<hostname>")
+
+    optParameters = [
+        ["config", None, DEFAULT_CONFIG_PATH.path,
+         "The path to the config file."],
+    ]
 
     def parseArgs(self, deployment_config, application_config, hostname):
         """
@@ -101,7 +107,7 @@ def _default_volume_service():
     :return: A ``VolumeService``.
     """
     options = VolumeOptions()
-    options.postOptions()
+    options.parseOptions([b"--config", self['config']])
     return VolumeScript().create_volume_service(reactor, options)
 
 
