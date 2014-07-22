@@ -36,6 +36,8 @@ class FlockerChangeStateTests(TestCase):
         """
         ``flocker-changestate`` is a command available on the system path
         """
+        from os import putenv
+        putenv('CONFIG_PATH', '100')
         result = check_output([b"flocker-changestate"] + [b"--version"])
         self.assertEqual(result, b"%s\n" % (__version__,))
 

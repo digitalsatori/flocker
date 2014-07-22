@@ -49,11 +49,6 @@ class ChangeStateOptions(Options):
                 "<deployment configuration> <application configuration> "
                 "<hostname>")
 
-    optParameters = [
-        ["config", None, DEFAULT_CONFIG_PATH.path,
-         "The path to the config file."],
-    ]
-
     def parseArgs(self, deployment_config, application_config, hostname):
         """
         Parse `deployment_config` and `application_config` strings as YAML, and
@@ -107,7 +102,14 @@ def _default_volume_service():
     :return: A ``VolumeService``.
     """
     options = VolumeOptions()
-    options.parseOptions([b"--config", self['config']])
+
+    from os import getenv
+    config = getenv('CONFIG_PATH', None)
+    if config is None:
+        options.postOptions()
+    else:
+        options.parseOptions([b"--config", config])
+
     return VolumeScript().create_volume_service(reactor, options)
 
 
