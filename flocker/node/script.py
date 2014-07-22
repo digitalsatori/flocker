@@ -15,7 +15,6 @@ from yaml.error import YAMLError
 from zope.interface import implementer
 
 from ..volume.script import VolumeOptions, VolumeScript
-from ..volume.service import DEFAULT_CONFIG_PATH
 from ..common.script import (
     flocker_standard_options, FlockerScriptRunner, ICommandLineScript)
 from . import ConfigurationError, model_from_configuration, Deployer
