@@ -4,6 +4,7 @@
 """
 The command-line ``flocker-changestate`` tool.
 """
+from os import getenv
 
 from twisted.python.usage import Options, UsageError
 from twisted.internet import reactor
@@ -103,11 +104,11 @@ def _default_volume_service():
     """
     options = VolumeOptions()
 
-    from os import getenv
     config = getenv('CONFIG_PATH', None)
     if config is None:
         options.postOptions()
     else:
+        # TODO test this branch
         options.parseOptions([b"--config", config])
 
     return VolumeScript().create_volume_service(reactor, options)

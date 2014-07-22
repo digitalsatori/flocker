@@ -3,7 +3,7 @@
 """
 Functional tests for the ``flocker-changestate`` command line tool.
 """
-from os import getuid
+from os import getuid, putenv
 from subprocess import check_output
 from unittest import skipUnless
 
@@ -36,7 +36,8 @@ class FlockerChangeStateTests(TestCase):
         """
         ``flocker-changestate`` is a command available on the system path
         """
-        from os import putenv
+        # TODO use something better than 100
+        # TODO separate tests, one requires root and doesn't change config path
         putenv('CONFIG_PATH', '100')
         result = check_output([b"flocker-changestate"] + [b"--version"])
         self.assertEqual(result, b"%s\n" % (__version__,))
