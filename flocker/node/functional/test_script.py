@@ -36,9 +36,7 @@ class FlockerChangeStateTests(TestCase):
         """
         ``flocker-changestate`` is a command available on the system path
         """
-        # TODO use something better than 100
-        # TODO separate tests, one requires root and doesn't change config path
-        putenv('CONFIG_PATH', b"volume1.json")
+        putenv('CONFIG_PATH', self.mktemp())
         result = check_output([b"flocker-changestate"] + [b"--version"])
         self.assertEqual(result, b"%s\n" % (__version__,))
 
