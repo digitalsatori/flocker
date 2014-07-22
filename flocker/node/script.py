@@ -108,7 +108,6 @@ def _default_volume_service():
     if config is None:
         options.postOptions()
     else:
-        # TODO test this branch
         options.parseOptions([b"--config", config])
 
     return VolumeScript().create_volume_service(reactor, options)
