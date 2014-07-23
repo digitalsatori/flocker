@@ -36,7 +36,7 @@ class FlockerChangeStateTests(TestCase):
         """
         ``flocker-changestate`` is a command available on the system path
         """
-        putenv('CONFIG_PATH', self.mktemp())
+        putenv('CONFIG_PATH', FilePath(self.mktemp()).path)
         result = check_output([b"flocker-changestate"] + [b"--version"])
         self.assertEqual(result, b"%s\n" % (__version__,))
 
